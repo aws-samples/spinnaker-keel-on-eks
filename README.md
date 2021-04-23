@@ -1,5 +1,7 @@
 # Spinnaker Keel Setup Guide
 
+This repo is intended to be used by the Spinnaker keel setup blog post. Notes below are for informational purposes only. 
+
 ## Configuration required by Keel in addition to core Spinnaker microservices:
   1. MySQL installation reachable by Keel.
   2. Keel service endpoint available to Orca, Echo, and Front50.
