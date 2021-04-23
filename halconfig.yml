@@ -1,0 +1,65 @@
+providers:
+  aws:
+    enabled: false
+    accounts: []
+    primaryAccount: demo-1
+    bakeryDefaults:
+      baseImages: []
+    defaultKeyPairTemplate: '{{name}}-keypair'
+    defaultRegions:
+    - name: us-west-2
+    defaults:
+      iamRole: BaseIAMRole
+  dockerRegistry:
+    enabled: true
+    accounts: 
+    - address: https://index.docker.io
+      cacheIntervalSeconds: 30
+      cacheThreads: 1
+      clientTimeoutMillis: 60000
+      email: fake.email@spinnaker.io
+      insecureRegistry: false
+      name: deploy-keel-registry
+      paginateSize: 100
+      permissions: {}
+      repositories:
+      - <REPO_NAME>
+      sortTagsByDate: false
+      trackDigests: false
+    primaryAccount: public-docker-account
+  kubernetes:
+    enabled: true
+    accounts:
+      - kubeconfigFile: /var/kubeconfig/kubeconfig-deploy
+        name: deploy-keel
+timezone: America/Los_Angeles
+persistentStorage:
+  persistentStoreType: s3
+  s3:
+    enabled: true
+    bucket: <CHANGEME>
+    rootFolder: front50
+    region: us-west-2
+security: 
+  apiSecurity:
+    overrideBaseUrl: http://aws.amazon.com
+  uiSecurity:
+    overrideBaseUrl: http://aws.amazon.com
+artifacts:
+  github:
+    enabled: true
+    accounts:
+    - name: github-artifact
+      token: <TOKEN>
+managedDelivery:
+  enabled: true
+  keel:
+    plugins:
+      ec2:
+        enabled: true
+      k8s:
+        enabled: true
+      deliveryConfig:
+        enabled: true
+features:
+  artifacts: true

@@ -1,0 +1,3 @@
+redis:
+  configuration:
+    secure: false

@@ -1,0 +1,23 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: keel-guide
+  region: us-west-2
+  version: "1.19"
+managedNodeGroups:
+  - name: managed-ng-1
+    instanceType: m5.large
+    minSize: 2
+    maxSize: 3
+iam:
+  withOIDC: true
+  serviceAccounts:
+  - metadata: # This service account is used by the front50 microservice to store and manage application and pipeline information.
+      name: front50-service-account
+      namespace: spinnaker
+    attachPolicyARNs:
+    - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+    roleName: "spinnaker-front50-service-account"
+    tags:
+      Application: "Front50"
+      Service: "Spinnaker"

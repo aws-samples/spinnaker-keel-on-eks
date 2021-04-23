@@ -1,0 +1,49 @@
+services:
+  clouddriver:
+    baseUrl: http://clouddriver:7002
+    enabled: true
+  clouddriverCaching:
+    baseUrl: http://clouddriver-caching:7002
+    enabled: false
+  clouddriverRo:
+    baseUrl: http://clouddriver-ro:7002
+    enabled: false
+  clouddriverRoDeck:
+    baseUrl: http://clouddriver-ro-deck:7002
+    enabled: false
+  clouddriverRw:
+    baseUrl: http://clouddriver-rw:7002
+    enabled: false
+  echo:
+    baseUrl: http://echo:8089
+    enabled: true
+  echoScheduler:
+    baseUrl: http://echo-scheduler:8089
+    enabled: false
+  echoWorker:
+    baseUrl: http://echo-worker:8089
+    enabled: false
+  fiat:
+    baseUrl: http://fiat:7003
+    enabled: false
+  front50:
+    baseUrl: http://front50:8080
+    enabled: true
+  igor:
+    baseUrl: http://igor:8088
+    enabled: true
+  kayenta:
+    baseUrl: http://kayenta:8090
+    enabled: false
+  keel:
+    baseUrl: http://keel:7010
+    enabled: true
+  orca:
+    baseUrl: http://orca:8083
+    enabled: true
+  redis:
+    baseUrl: redis://redis:6379
+    enabled: true
+  redisRo:
+    baseUrl: redis://redis:6379
+    enabled: true

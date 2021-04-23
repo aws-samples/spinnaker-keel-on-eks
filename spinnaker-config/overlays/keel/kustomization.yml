@@ -1,0 +1,79 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+patchesStrategicMerge:
+- patch-clouddriver.yml
+- patch-front50.yml
+- patch-deck.yml
+- patch-gate.yml
+images:
+- name: us-docker.pkg.dev/spinnaker-community/docker/clouddriver:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/deck:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/echo:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/front50:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/gate:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/igor:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/orca:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/rosco:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/fiat:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/kayenta:spinnaker-master-latest-unvalidated
+  newTag: spinnaker-1.24.4
+- name: us-docker.pkg.dev/spinnaker-community/docker/keel:spinnaker-master-latest-unvalidated
+  newTag: 0.1.0-20210310200021
+namespace: spinnaker
+secretGenerator:
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: clouddriver-config
+- behavior: merge
+  files:
+  - spinnaker.yml                                       
+  name: echo-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: fiat-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: front50-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: gate-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  - secrets/igor-local.yml
+  name: igor-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: kayenta-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  - secrets/keel-local.yml
+  name: keel-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: orca-config
+- behavior: merge
+  files:
+  - spinnaker.yml
+  name: rosco-config
+- name: kubeconfig-deploy
+  files:
+  - secrets/kubeconfig-deploy

@@ -1,0 +1,19 @@
+keel:
+  plugins:
+    deliveryConfig:
+      enabled: true
+    ec2:
+      enabled: true
+    k8s:
+      enabled: false
+sql:
+  connectionPools:
+    default:
+      jdbcUrl: jdbc:mysql://mysql/keel?useSSL=false
+      password: mysecretpassword
+      user: keel
+  enabled: true
+  migration:
+    jdbcUrl: jdbc:mysql://mysql/keel?useSSL=false
+    password: mysecretpassword
+    user: keel

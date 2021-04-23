@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front50
+  namespace: spinnaker
+spec:
+  replicas: 1
+  template:
+    spec:
+      serviceAccountName: front50-service-account
+      securityContext:
+        fsGroup: 100
+      

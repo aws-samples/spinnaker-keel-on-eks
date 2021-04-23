@@ -1,0 +1,57 @@
+services:
+  # Even though clouddriver is deployed in HA mode, other services may not know
+  # this and simply look for service.clouddriver. To account for this use case,
+  # we'll point the generic 'clouddriver' at clouddriver-rw.
+  keel:
+    baseUrl: http://keel.spinnaker:7002
+    enabled: true
+  clouddriver:
+    baseUrl: http://clouddriver-rw.spinnaker:7002
+    enabled: true
+  clouddriverCaching:
+    baseUrl: http://clouddriver-caching.spinnaker:7002
+    enabled: true
+  clouddriverRo:
+    baseUrl: http://clouddriver-ro.spinnaker:7002
+    enabled: true
+  clouddriverRoDeck:
+    baseUrl: http://clouddriver-ro-deck.spinnaker:7002
+    enabled: true
+  clouddriverRw:
+    baseUrl: http://clouddriver-rw.spinnaker:7002
+    enabled: true
+  # Even though echo is deployed in HA mode, other services may not know
+  # this and simply look for service.echo. To account for this use case,
+  # we'll point the generic 'echo' at echo-worker.
+  echo:
+    baseUrl: http://echo-worker.spinnaker:8089
+    enabled: true
+  echoScheduler:
+    baseUrl: http://echo-scheduler.spinnaker:8089
+    enabled: true
+  echoWorker:
+    baseUrl: http://echo-worker.spinnaker:8089
+    enabled: true
+  fiat:
+    baseUrl: http://fiat.spinnaker:7003
+    enabled: false
+  front50:
+    baseUrl: http://front50.spinnaker:8080
+    enabled: true
+  igor:
+    baseUrl: http://igor.spinnaker:8088
+    enabled: true
+  kayenta:
+    baseUrl: http://kayenta.spinnaker:8090
+    enabled: false
+  orca:
+    baseUrl: http://orca.spinnaker:8083
+    enabled: true
+  redis:
+    baseUrl: redis://redis.spinnaker:6379
+    enabled: true
+  redisRo:
+    # For now just pointing at the primary redis
+    # Consider pointing to a spin-redis-ro service
+    baseUrl: redis://redis.spinnaker:6379
+    enabled: true

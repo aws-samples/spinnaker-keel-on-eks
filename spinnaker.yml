@@ -1,0 +1,125 @@
+name: test1
+application: keelguide
+serviceAccount: keeldemo-service-account
+artifacts:
+- name: <CHANGEME>
+  type: docker
+  reference: my-docker-artifact
+  tagVersionStrategy: semver-tag
+environments:
+  - name: dev
+    locations:
+      account: deploy-keel
+      regions: []
+    resources:
+    - kind: k8s/resource@v1
+      spec:
+        metadata: 
+          application: keelguide
+        template:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: keeldemo
+            namespace: keel
+          spec:
+            ports:
+            - port: 8080
+              protocol: TCP
+              targetPort: 80
+            type: ClusterIP
+            selector:
+              app: keeldemo
+    - kind: k8s/resource@v1
+      spec:
+        container:
+          reference: my-docker-artifact
+        metadata: 
+          application: keelguide
+        template:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata: 
+            name: keeldemo
+            namespace: keel
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: keeldemo
+            template:
+              metadata:
+                labels:
+                  app: keeldemo
+              spec:
+                containers:
+                - name: keeldemo
+                  image: my-docker-artifact
+                  ports:
+                  - name: traffic-port
+                    containerPort: 80
+                    protocol: TCP
+                  readinessProbe:
+                    httpGet:
+                      port: traffic-port
+                      path: /
+  - name: prod
+    constrains:
+    - type: manual-judgement
+    - type: depends-on
+      environment: dev
+    locations:
+      account: deploy-keel
+      regions: []
+    resources:
+    - kind: k8s/resource@v1
+      spec:
+        metadata: 
+          application: keelguide
+        template:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: keeldemo-prod
+            namespace: keel
+          spec:
+            ports:
+            - port: 8080
+              protocol: TCP
+              targetPort: 80
+            type: ClusterIP
+            selector:
+              app: keeldemo-prod
+    - kind: k8s/resource@v1
+      spec:
+        container:
+          reference: my-docker-artifact
+        metadata: 
+          application: keelguide
+        template:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata: 
+            name: keeldemo-prod
+            namespace: keel
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: keeldemo-prod
+            template:
+              metadata:
+                labels:
+                  app: keeldemo-prod
+              spec:
+                containers:
+                - name: keeldemo-prod
+                  image: my-docker-artifact
+                  ports:
+                  - name: traffic-port
+                    containerPort: 80
+                    protocol: TCP
+                  readinessProbe:
+                    httpGet:
+                      port: traffic-port
+                      path: /

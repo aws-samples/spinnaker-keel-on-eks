@@ -1,0 +1,4 @@
+github:
+  baseUrl: "https://api.github.com"
+  accessToken: mytoken
+  commitDisplayLength: 8

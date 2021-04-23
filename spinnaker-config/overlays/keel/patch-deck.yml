@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: deck
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9000
+      $patch: delete
+    - port: 80
+      protocol: TCP
+      targetPort: 9000
+  # Uncomment below and update IP address range to restrict what IP address can access this service
+  # loadBalancerSourceRanges:
+  #   - <yourIP>/32

@@ -1,0 +1,60 @@
+services:
+  # Even though clouddriver is deployed in HA mode, other services may not know
+  # this and simply look for service.clouddriver. To account for this use case,
+  # we'll point the generic 'clouddriver' at clouddriver-rw.
+  keel:
+    baseUrl: http://keel.keel:7010
+    enabled: true
+  clouddriver:
+    baseUrl: http://clouddriver.keel:7002
+    enabled: true
+  # clouddriver:
+  #   baseUrl: http://clouddriver-rw.keel:7002
+  #   enabled: false
+  clouddriverCaching:
+    baseUrl: http://clouddriver-caching.keel:7002
+    enabled: false
+  clouddriverRo:
+    baseUrl: http://clouddriver-ro.keel:7002
+    enabled: false
+  clouddriverRoDeck:
+    baseUrl: http://clouddriver-ro-deck.keel:7002
+    enabled: false
+  clouddriverRw:
+    baseUrl: http://clouddriver-rw.keel:7002
+    enabled: false
+  # Even though echo is deployed in HA mode, other services may not know
+  # this and simply look for service.echo. To account for this use case,
+  # we'll point the generic 'echo' at echo-worker.
+  echo:
+    baseUrl: http://echo.keel:8089
+    enabled: true
+  echoScheduler:
+    baseUrl: http://echo-scheduler.keel:8089
+    enabled: false
+  echoWorker:
+    baseUrl: http://echo-worker.keel:8089
+    enabled: false
+  fiat:
+    baseUrl: http://fiat.keel:7003
+    enabled: true
+  front50:
+    baseUrl: http://front50.keel:8080
+    enabled: true
+  igor:
+    baseUrl: http://igor.keel:8088
+    enabled: true
+  kayenta:
+    baseUrl: http://kayenta.keel:8090
+    enabled: false
+  orca:
+    baseUrl: http://orca.keel:8083
+    enabled: true
+  redis:
+    baseUrl: redis://redis.keel:6379
+    enabled: true
+  redisRo:
+    # For now just pointing at the primary redis
+    # Consider pointing to a spin-redis-ro service
+    baseUrl: redis://redis.keel:6379
+    enabled: true

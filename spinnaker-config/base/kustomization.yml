@@ -1,0 +1,68 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+secretGenerator:
+- behavior: merge
+  files:
+  - kleat/clouddriver.yml
+  name: clouddriver-config
+- behavior: merge
+  files:
+  - local/settings-local.js
+  - kleat/settings.js
+  name: deck-config
+- behavior: merge
+  files:
+  - kleat/echo.yml
+  name: echo-config
+- behavior: merge
+  files:
+  - kleat/fiat.yml
+  name: fiat-config
+- behavior: merge
+  files:
+  - kleat/front50.yml
+  - local/front50-local.yml
+  name: front50-config
+- behavior: merge
+  files:
+  - kleat/gate.yml
+  - local/gate-local.yml
+  name: gate-config
+- behavior: merge
+  files:
+  - kleat/igor.yml
+  - local/igor-local.yml
+  name: igor-config
+- behavior: merge
+  files:
+  - kleat/kayenta.yml
+  name: kayenta-config
+- behavior: merge
+  files:
+  - kleat/orca.yml
+  - local/orca-local.yml
+  name: orca-config
+- behavior: merge
+  files:
+  - local/keel-local.yml
+  name: keel-config
+- behavior: merge
+  files:
+  - kleat/rosco.yml
+  name: rosco-config
+configMapGenerator:
+- behavior: merge
+  envs:
+  - kleat/deck.env
+  name: deck-env
+resources:
+- redis
+- mysql
+- ../../kustomization-base/core
+- ../../kustomization-base/fiat
+- ../../kustomization-base/keel
+commonLabels:
+  app.kubernetes.io/component: server
+  app.kubernetes.io/managed-by: kleat
+  app.kubernetes.io/part-of: spinnaker
+namespace: spinnaker
