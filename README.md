@@ -6,7 +6,7 @@
   3. Enable feature flags in Deck
   4. Enable Igor integration with SCM services
   
-## If you do not want to create new Spinnaker installation entirely, general steps look something like this: 
+## If you do not want to create new Spinnaker installation entirely 
 ### MySQL instance
   Can be a cloud managed MySQL instance, an instance running in Kubernetes, or on a VM. It just needs to be rechable by Keel.
 
