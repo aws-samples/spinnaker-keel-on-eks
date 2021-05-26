@@ -36,7 +36,7 @@ In this post, we will walk you through the follow steps:
 Run the following command to clone the setup repository to your local machine.
 
 ```
-git clone [https://github.com/nabuskey/keel-setup-guide.git](https://github.com/aws-samples/spinnaker-keel-on-eks.git) && cd keel-setup-guide
+git clone https://github.com/aws-samples/spinnaker-keel-on-eks.git && cd keel-setup-guide
 ```
 
 
@@ -46,7 +46,7 @@ The commands used in the rest of this post are run from this repository’s root
 
 Open `eks/cluster.yaml` in a text editor and examine the configuration options. It instructs eksctl to create the following resources:
 
-* An Amazon EKS cluster named “keel-guide” in the us-west-2 region.
+* An Amazon EKS cluster named “keel-guide” in the **us-west-2** region.
 * An Amazon EKS managed node group, which will run Spinnaker workload.
 * Kubernetes service accounts with IAM roles associations for the Front50 microservice.
 
