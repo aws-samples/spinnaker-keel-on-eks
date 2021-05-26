@@ -177,13 +177,15 @@ We need to notify Spinnaker when there is a change to the repository. We will us
 1. Go to your repository’s settings page. 
 2. Go to settings and click *Add webhook*.
 
-![webhook1](doc/images/webhook1.png)
-1. In the webhook configuration page, specify the Spinnaker webhook URL, `http://${GATE_URL}/webhooks/git/github` .
-    The `GATE_URL` value can be found by running `kubectl -n spinnaker get svc gate -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'`
-2. Select `application/json` as the context type.
+    ![webhook1](doc/images/webhook1.png)
 
-![webhook1](doc/images/webhook2.png)
-Click the *Add Webhook* button to finish creating webhook.
+3. In the webhook configuration page, specify the Spinnaker webhook URL, `http://${GATE_URL}/webhooks/git/github` .
+    The `GATE_URL` value can be found by running `kubectl -n spinnaker get svc gate -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'`
+4. Select `application/json` as the context type.
+
+    ![webhook1](doc/images/webhook2.png)
+
+5. Click the *Add Webhook* button to finish creating webhook.
 
 
 ### Configure a Docker Hub repository
@@ -193,33 +195,34 @@ We will also create a public Docker Hub repository to pull available images for 
 1. Create a public Docker Hub repository by [following this guide](https://docs.docker.com/docker-hub/repos/). 
 2. Create an image to use for our example application. Be sure to replace `<CHANGEME>` with your repository name.
 
-```
-docker build -t <CHANGEME>:0.0.1 .
-docker push <CHANGEME>:0.0.1
-```
+    ```
+    docker build -t <CHANGEME>:0.0.1 .
+    docker push <CHANGEME>:0.0.1
+    ```
 
-1. In `halconfig.yml` navigate to `providers.dockerRegistry.accounts`. Replace `REPO_NAME` with your repository name you just created. 
-2. In the same file, set `providers.dockerRegistry.enabled` value to `true`.
+3. In `halconfig.yml` navigate to `providers.dockerRegistry.accounts`. Replace `REPO_NAME` with your repository name you just created. 
+4. In the same file, set `providers.dockerRegistry.enabled` value to `true`.
+
 
 ### Reconfigure Spinnaker microservices
 
 1. Run the following command to make `kleat` regenerate configuration files for Spinnaker microservices: 
 
-```
-kleat generate halconfig.yml spinnaker-config/base/kleat
-```
+    ```
+    kleat generate halconfig.yml spinnaker-config/base/kleat
+    ```
 
-1. Redeploy Spinnaker to apply configuration changes:
+2. Redeploy Spinnaker to apply configuration changes:
 
-```
-kustomize build spinnaker-config/overlays/keel | kubectl apply -f -
-```
+    ```
+    kustomize build spinnaker-config/overlays/keel | kubectl apply -f -
+    ```
 
-1. Check deployment status with the following command:
+3. Check deployment status with the following command:
 
-```
-kubectl -n spinnaker get pods
-```
+    ```
+    kubectl -n spinnaker get pods
+    ```
 
 ### Create a service account
 
@@ -227,35 +230,40 @@ Keel needs a Spinnaker service account to manage delivery configurations for the
 
 1. Port forward the Front50 service by running the following command:
 
-```
-kubectl -n spinnaker port-forward svc/front50 8080
-```
+    ```
+    kubectl -n spinnaker port-forward svc/front50 8080
+    ```
 
-1. In a different terminal session, run the following command to create a service account:
+2. In a different terminal session, run the following command to create a service account:
 
-```
-curl -X POST \
-  -H "Content-type: application/json" \
-  -d '{ "name": "keeldemo-service-account", "memberOf": [] }' localhost:8080/serviceAccounts
-```
+    ```
+    curl -X POST \
+      -H "Content-type: application/json" \
+      -d '{ "name": "keeldemo-service-account", "memberOf": [] }' localhost:8080/serviceAccounts
+    ```
 
-1. Verify the account was created:
+3. Verify the account was created:
 
-```
-curl localhost:8080/serviceAccounts
-```
+    ```
+    curl localhost:8080/serviceAccounts
+    ```
 
 ### Create an application
 
 Navigate to the Applications tab and click on the create application button. Enter an application name and an email address. The email address does not need to be valid.
+
 ![app](doc/images/application.png)
+
 Once the application is created, click on the config tab, check the *Environments* checkbox, and *Save Changes*.
+
 ![config](doc/images/config.png)
 
 ### Create a sample pipeline
 
 Go to the Pipelines tab on the left, click *create pipeline*, enter a name for the pipeline, then click *create*. Click the *Pipeline Actions* button on the upper right,and then select *Edit as JSON*. 
+
 ![pipeline](doc/images/pipeline.png)
+
 In the new window, paste the following. Be sure to update the following values:
 
 * The slug field should reference your GitHub repository name. For example, use `clouddriver` for `github.com/spinnaker/clouddriver`
@@ -321,14 +329,18 @@ git add .spinnaker/spinnaker.yml && git commit -m 'initial commit' && git push
 ### Testing Keel example application
 
 As soon as the file is committed to your repository, you will notice the pipeline being executed in your application. Click on the *Tasks* tab and you should see Kubernetes resources being provisioned.
-![](doc/images/progress.png) You can verify Kubernetes resources are deployed by running the following commands:
 
-```
-kubectl -n keel get deployments
-kubectl -n keel get svc
-```
+![](doc/images/progress.png) 
+
+You can verify Kubernetes resources are deployed by running the following commands:
+
+  ```
+  kubectl -n keel get deployments
+  kubectl -n keel get svc
+  ```
 
 In the Spinnaker application, navigate to the *Environments* tab. There should be `0.0.1` version of the artifact available. and this version is deployed to dev and prod environments. In this case, available versions are dictated by the Docker image tags available in the Docker Hub repository. 
+
 ![](doc/images/envrionments.png)
 
 When a new image version is pushed to the repository, Keel will automatically deploy it to the Kubernetes cluster.
@@ -352,6 +364,7 @@ curl localhost:8080
 
 
 You can pin a particular version of an artifact to an environment. When an artifact is pinned to an environment, no version of artifact can be deployed to the environment until the pin is removed. 
+
 ![](doc/images/artifact.png)
 
 You can also mark artifacts as bad. Bad artifacts are removed from the environment and the previous version is deployed to the environment instead. 
