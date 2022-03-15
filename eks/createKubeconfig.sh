@@ -2,7 +2,7 @@
 set -xe
 SERVICE_ACCOUNT_NAME=deploy-service-account
 CONTEXT=$(kubectl config current-context)
-NAMESPACE=keel
+NAMESPACE=spinnaker
 NEW_CONTEXT=deploy
 KUBECONFIG_FILE="kubeconfig-sa"
 SECRET_NAME=$(kubectl get serviceaccount ${SERVICE_ACCOUNT_NAME} \
