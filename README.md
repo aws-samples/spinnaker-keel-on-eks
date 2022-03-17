@@ -140,7 +140,7 @@ kubectl -n spinnaker rollout status deployment
 kubectl -n spinnaker get pods 
 ```
 
-Once new pods are ready, navigate to the address returned by `kubectl -en spinnaker get deck gate -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` 
+Once new pods are ready, navigate to the address returned by `kubectl -n spinnaker get svc deck -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` 
 You should see the Spinnaker UI with an empty list of applications. 
 
 
