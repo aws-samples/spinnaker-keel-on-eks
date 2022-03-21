@@ -36,7 +36,7 @@ In this post, we will walk you through the follow steps:
 Run the following command to clone the setup repository to your local machine.
 
 ```
-git clone https://github.com/aws-samples/spinnaker-keel-on-eks.git && cd keel-setup-guide
+git clone https://github.com/aws-samples/spinnaker-keel-on-eks.git && cd spinnaker-keel-on-eks
 ```
 
 
@@ -140,7 +140,7 @@ kubectl -n spinnaker rollout status deployment
 kubectl -n spinnaker get pods 
 ```
 
-Once new pods are ready, navigate to the address returned by `kubectl -en spinnaker get deck gate -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` 
+Once new pods are ready, navigate to the address returned by `kubectl -n spinnaker get svc deck -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'` 
 You should see the Spinnaker UI with an empty list of applications. 
 
 
