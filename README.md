@@ -115,13 +115,13 @@ Next, we need to redeploy Spinnaker and make Spinnaker aware of loadbalancer URL
 In `halconfig.yml` , navigate to `security.apiSecurity.overrideBaseUrl` . Replace the placeholder value with the value returned by the following command:
 
 ```
-kubectl -n spinnaker get svc gate -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+echo "http://$(kubectl -n spinnaker get svc gate -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
 ```
 
 In the same file, navigate to `security.uiSecurity.overrideBaseUrl` . Replace the place holder value with the value returned by the following command:
 
 ```
-kubectl -n spinnaker get svc deck -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'
+echo "http://$(kubectl -n spinnaker get svc deck -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')"
 ```
 
 Note that the follow steps will expose your Spinnaker UI to the world, and it should be used for testing purposes only. If you would like to restrict access based on IP range, add `spec.loadBalancerSourceRanges` to gate and deck services. See `spinnaker-config/overlays/keel/patch-gate.yml` and `spinnaker-config/overlays/keel/patch-gate.yml` for more details.
