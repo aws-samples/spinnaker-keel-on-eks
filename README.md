@@ -349,7 +349,7 @@ To see automatic deployment in action, run the following commands to create and 
 
 ```
 echo -e "Hello version is 0.0.2" > index.html
-docker build docker build -t <CHANGEME>:0.0.2 . && docker push <CHANGEME>:0.0.2 .
+docker build -t <CHANGEME>:0.0.2 . && docker push <CHANGEME>:0.0.2
 ```
 
 
