@@ -288,7 +288,7 @@ In the new window, paste the following. Be sure to update the following values:
   ],
   "triggers": [
     {
-      "branch": "main",
+      "branch": "master",
       "enabled": true,
       "expectedArtifactIds": [],
       "project": "CHANGEME",
